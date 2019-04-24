@@ -32,6 +32,7 @@ GraphiQL is an in-browser tool that is available only when running gatsby's deve
     ```
     npm i gatsby-transformer-remark
     ```
+1. Rename the `src/pages/index.js` to `src/pages/index-old.js` since we will be creating our home page from markdown.
 1. Create the `src/templates` and `src/data` folders
 1. Code a `src/data/home.md` data source file as follows.
     ```
@@ -127,6 +128,7 @@ GraphiQL is an in-browser tool that is available only when running gatsby's deve
             }
 
             result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+                console.log(`Building page ${node.frontmatter.path}...`)
                 createPage({
                     path: node.frontmatter.path,
                     component: homeTemplate,
@@ -137,5 +139,32 @@ GraphiQL is an in-browser tool that is available only when running gatsby's deve
     }
 
     ```
+    
+Run and test out your application to make sure the home page now shows your markdown page.
+
+Now let's add a new template called `basic`.
+    
+1. Add a new front matter field called `template` to the existing `src/data/home.md` so that it looks like the following:
+    ```
+    ---
+    path: "/"
+    date: "2017-11-07"
+    title: "Home Page Title"
+    template: "home"
+    ---
+    ```
+1. Then copy the home markdown page to `src/data/contact.md` and modify the data to be a contact page. Be sure to change the path to `/contact` and the template to `basic`. the front matter section should look like...
+    ```
+    ---
+    path: "/contact"
+    date: "2017-11-07"
+    title: "Contact Page Title"
+    template: "basic"
+    ---
+    ```
+1. Then copy the home template page to `src/templates/basic.js` and make a modification like adding a note at the bottom that template is called basic.
+
+Now if you start Gatsby you will notice that both the http://localhost:8000 and http://localhost:8000/contact work and show their respective pages. However, the contact page is still showing the home templates. That's because the build process (`gatsby-node.js`) has not been improved to pull the template dynamically from the source data.
+
 
 ### Linking Pages
