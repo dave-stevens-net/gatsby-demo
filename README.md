@@ -166,5 +166,45 @@ Now let's add a new template called `basic`.
 
 Now if you start Gatsby you will notice that both the http://localhost:8000 and http://localhost:8000/contact work and show their respective pages. However, the contact page is still showing the home templates. That's because the build process (`gatsby-node.js`) has not been improved to pull the template dynamically from the source data.
 
+To do this we will need to replace the `homeTemplate` variable with an object map called `templates` as follows.
+```
+    const templateNames = ['home', 'basic']
+    const templates = {}
+    templateNames.forEach(templateName => {
+        templates[templateName] = path.resolve(`src/templates/${templateName}.js`)
+    })
+```
+
+Then we need to remember to add the template to our graphql query inside the `gatsby-node.js` file.
+```
+    return graphql(`
+        {
+            allMarkdownRemark(
+                sort: { order: DESC, fields: [frontmatter___date] }
+                limit: 1000
+            ) {
+                edges {
+                    node {
+                        frontmatter {
+                            path
+                            template <--- add this
+                        }
+                        ...
+```
+
+And lastly we will change the `createPage` call to pull the template dynaically from the fron matter data as follows.
+```
+        result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+            console.log(`Building page ${node.frontmatter.path}...`)
+            createPage({
+                path: node.frontmatter.path,
+                component: templates[node.frontmatter.template],    <--- modify this line
+                context: {}, // additional data can be passed via context
+            })
+        })
+```
+
+Now restart the development server and test your http://localhost:8000/contact page. It should now show the contact template.
 
 ### Linking Pages
+
