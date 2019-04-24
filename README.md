@@ -28,4 +28,114 @@ GraphiQL is an in-browser tool that is available only when running gatsby's deve
 
 ### Sourcing Pages from Markdown
 
+1. Install markdown plugin.
+    ```
+    npm i gatsby-transformer-remark
+    ```
+1. Create the `src/templates` and `src/data` folders
+1. Code a `src/data/home.md` data source file as follows.
+    ```
+    ---
+    path: "/"
+    date: "2017-11-07"
+    title: "Home Page Title"
+    ---
+    This is the content of the page.
+
+    * This is list item 1
+    * This is list item 2
+    ```
+1. Code a `src/templates/home.js` template component.
+    ```
+    import React from "react"
+    import { graphql } from "gatsby"
+
+    export default function HomePageTemplate({
+        data, // this prop will be injected by the GraphQL query below.
+    }) {
+        const { markdownRemark } = data // data.markdownRemark holds our post data
+        const { frontmatter, html } = markdownRemark
+        return (
+            <div className="blog-post-container">
+                <div className="blog-post">
+                    <h1>{frontmatter.title}</h1>
+                    <h2>{frontmatter.date}</h2>
+                    <div
+                        className="blog-post-content"
+                        dangerouslySetInnerHTML={{ __html: html }}
+                    />
+                </div>
+            </div>
+        )
+    }
+
+    export const pageQuery = graphql`
+        query($path: String!) {
+            markdownRemark(frontmatter: { path: { eq: $path } }) {
+                html
+                frontmatter {
+                    date(formatString: "MMMM DD, YYYY")
+                    path
+                    title
+                }
+            }
+        }
+    `
+    ```
+1. Add the following configuration to the bottom of your `gatsby-config.js` file in your root folder. The first entry adds the filesystem data source called `markdown-pages`. The 2nd entry adds the plugin. The plugin looks for a data source called `markdown-pages` for the markdown files.
+    ```
+    plugins:[
+        ...
+        // Only add the following two elements within the plugins array.
+        {
+            resolve: `gatsby-source-filesystem`,
+            options: {
+                path: `${__dirname}/src/data`,
+                name: "markdown-pages",
+            },
+        },
+        `gatsby-transformer-remark`
+    ],
+    ```
+1. Add the following to your `gatsby-node.js` file in your root folder. The `gatsby-node.js` file is only run during the build process to build out your pages.
+    ```
+    const path = require("path")
+
+    exports.createPages = ({ actions, graphql }) => {
+        const { createPage } = actions
+
+        const homeTemplate = path.resolve(`src/templates/home.js`)
+
+        return graphql(`
+            {
+                allMarkdownRemark(
+                    sort: { order: DESC, fields: [frontmatter___date] }
+                    limit: 1000
+                ) {
+                    edges {
+                        node {
+                            frontmatter {
+                                path
+                            }
+                        }
+                    }
+                }
+            }
+        `).then(result => {
+            if (result.errors) {
+                return Promise.reject(result.errors)
+            }
+
+            result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+                createPage({
+                    path: node.frontmatter.path,
+                    component: homeTemplate,
+                    context: {}, // additional data can be passed via context
+                })
+            })
+        })
+    }
+
+    ```
+
 ### Linking Pages
