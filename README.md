@@ -227,15 +227,51 @@ All images, whether optimized or not, sould be stored in your `/src/images` fold
 ```
 import logo from '../images/gatsby-icon.png'
 ...
-<img src={logo} style={{height: '100px'}}/>
+<img src={logo} style={{height: '100px'}} alt="Logo"/>
 ```
 
-Gatsby can optimize large
+Gatsby perform the following image optimizations for you, each of which would be a difficult task of its own.
+* Resize large images to the size needed by your design
+* Generate multiple smaller images so smartphones and tablets don’t download desktop-sized images
+* Strip all unnecessary metadata and optimize JPEG and PNG compression
+* Efficiently lazy load images to speed initial page load and save bandwidth
+* Use the “blur-up” technique or a “traced placeholder” SVG to show a preview of the image while it loads
+* Hold the image position so your page doesn’t jump while images load
 
+We will be following the steps outline in https://www.gatsbyjs.org/docs/using-gatsby-image/
 
+1. Add necessarry node package dependencies (This is already done for you with the default gatsby setup).
+    ```
+    npm install --save gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
+    ```
+1. Add the plugins to `gatsby-config.js` (This is already done for you with the default gatsby setup).
+    ```
+    plugins: [
+        ...
+        `gatsby-transformer-sharp`,
+        `gatsby-plugin-sharp`,
+    ```
+1. Add a GraphQL query to your page or template.
+    ```
+    astro: file(relativePath: { eq: "gatsby-astronaut.png" }) {
+        childImageSharp {
+            fluid {
+                ...GatsbyImageSharpFluid
+            }
+        }
+    }
+    ```
+1. Add the image to your JSX.
+    ```
+    import Img from "gatsby-image"
+    ...
+    <Img fluid={data.astro.childImageSharp.fluid} alt="Astro" />
+    ```
+    Note: Throttle network in browser settings to Fast 3G to demo the SVG blurred image while loading.
+    
 ### Make Styling Easier with Styled Components
 
-I highly recommend styled components to keep your component JSX 
+Gatsby works great with styled components. Visit https://www.gatsbyjs.org/docs/styled-components/ to learn more. You can also use the [Material UI Component Library](https://material-ui.com/) without any Gatsby plugin. This can be helpful for programming input forms, etc.
 
 ### Some SEO Considerations
 
