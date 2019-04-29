@@ -206,5 +206,17 @@ And lastly we will change the `createPage` call to pull the template dynaically 
 
 Now restart the development server and test your http://localhost:8000/contact page. It should now show the contact template.
 
-### Linking Pages
+### Internal Linking
 
+Gatsby supports preloading of internal links. Page links are preloaded when they come into view on the browser window. Add a link as follows:
+
+1. Import the `Link` component.
+    ```
+    import { graphql, Link } from "gatsby"
+    ```
+2. Add a link anywhere in your page JSX.
+    ```
+    <Link to="/contact">Go To Contact Page</Link>
+    ```
+    
+### Optimizing Images
