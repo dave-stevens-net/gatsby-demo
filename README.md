@@ -218,5 +218,26 @@ Gatsby supports preloading of internal links. Page links are preloaded when they
     ```
     <Link to="/contact">Go To Contact Page</Link>
     ```
-    
+Preloading using the Link component is not supported within your markdown. Traditional markdown links such as `[label](ulr)` work fine but preloading is not applied. To get preloading to work within your markdown you may want to use [MDX](https://mdxjs.com/) with the [gatsby-mdx plugin]( https://www.gatsbyjs.org/packages/gatsby-mdx/).
+
 ### Optimizing Images
+
+All images, whether optimized or not, sould be stored in your `/src/images` folder, which has been added as a `gatsby-source-filesystem` in the default `gatsby-config.js` configuration. Small images such as an SVG logo do not need to be optimized. These images can be imported into your JSX as follows:
+
+```
+import logo from '../images/gatsby-icon.png'
+...
+<img src={logo} style={{height: '100px'}}/>
+```
+
+
+
+### Make Styling Easier with Styled Components
+
+I highly recommend styled components to keep your component JSX 
+
+### Some SEO Considerations
+
+* Add a favicon using the [gatsby-plugin-manifest plugin](https://www.gatsbyjs.org/tutorial/part-eight/#-using-gatsby-plugin-manifest).
+* Add page metadata [using helmet](https://www.gatsbyjs.org/tutorial/part-eight/#add-page-metadata).
+* Generate a sitemap using the [gatsby-plugin-sitemap plugin](https://www.gatsbyjs.org/docs/creating-a-sitemap/).
