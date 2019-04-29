@@ -230,6 +230,7 @@ import logo from '../images/gatsby-icon.png'
 <img src={logo} style={{height: '100px'}}/>
 ```
 
+Gatsby can optimize large
 
 
 ### Make Styling Easier with Styled Components
