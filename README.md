@@ -7,6 +7,9 @@ Gatsby is a static site generator. You can source your pages from various data s
 1. [Testing Your New Site](#testing-your-new-site)
 1. [Sourcing Pages from Markdown](#sourcing-pages-from-markdown)
 1. [Internal Linking](#internal-linking)
+1. [Optimizing Images](#optimizing-images)
+1. [Components In Your Markdown With MDX](#components-in-your-markdown-with-mdx)
+1. [Make Styling Easier with Styled Components](#make-styling-easier-with-styled-components)
 1. [Some SEO Considerations](#some-seo-considerations)
 
 ## Setup
@@ -276,6 +279,51 @@ We will be following the steps outline in https://www.gatsbyjs.org/docs/using-ga
     ```
     Note: Throttle network in browser settings to Fast 3G to demo the SVG blurred image while loading.
     
+## Components In Your Markdown With MDX
+
+Sometimes you want to intermix your markdown with some components. For example, you may want to add a component that will enable you to add an image in the middle of your markdown and format it with whatever styling properties you wish to define. Or, you may want to intermix code in a blog and you want to define a component to style that code with copy to clipboard functionality, etc. The possibilities are endless. You can easily accomplish these tasks using MDX.
+
+If in the future you want to start a project with MDX there is a site initializer for MDX. See https://www.gatsbyjs.org/docs/mdx/getting-started for more info. For now, we will add it to our existing demo project.
+
+1. Intall dependencies
+    ```
+    npm i gatsby-mdx @mdx-js/mdx @mdx-js/react
+    ```
+1. Update your `gatsby-config.js` to use the `gatsby-mdx` plugin
+    ```
+    plugins:[
+        ...
+        `gatsby-mdx`
+    ],
+    ```
+1. Add an mdx page to the `src/pages` directory (e.g. `src/pages/about.mdx`). The following file will add an optomized image to your page. See more at https://www.gatsbyjs.org/docs/mdx/writing-pages for instructions on how to add a layout.
+
+    ```
+    import Img from "gatsby-image"
+    import { graphql } from "gatsby"
+
+    # This is an MDX page.
+
+    This is some content.
+
+    - bullet 1
+    - bullet 2
+
+    <Img fluid={props.data.astro.childImageSharp.fluid} alt="Astro" />
+
+    export const pageQuery = graphql`
+      query {
+        astro: file(relativePath: { eq: "gatsby-astronaut.png" }) {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+      }
+    `
+    ```
+
 ## Make Styling Easier with Styled Components
 
 Gatsby works great with styled components. Visit https://www.gatsbyjs.org/docs/styled-components/ to learn more. You can also use the [Material UI Component Library](https://material-ui.com/) without any Gatsby plugin. This can be helpful for programming input forms, etc.
