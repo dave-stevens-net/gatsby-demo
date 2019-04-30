@@ -6,6 +6,8 @@ Gatsby is a static site generator. You can source your pages from various data s
 1. [Setup](#setup)
 1. [Testing Your New Site](#testing-your-new-site)
 1. [Sourcing Pages from Markdown](#sourcing-pages-from-markdown)
+1. [Internal Linking](#internal-linking)
+1. [Some SEO Considerations](#some-seo-considerations)
 
 ## Setup
 
