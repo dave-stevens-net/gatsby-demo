@@ -281,7 +281,7 @@ We will be following the steps outline in https://www.gatsbyjs.org/docs/using-ga
     
 ## Components In Your Markdown With MDX
 
-Sometimes you want to intermix your markdown with some components. For example, you may want to add a component that will enable you to add an image in the middle of your markdown and format it with whatever styling properties you wish to define. Or, you may want to intermix code in a blog and you want to define a component to style that code with copy to clipboard functionality, etc. The possibilities are endless. You can easily accomplish these tasks using MDX.
+Sometimes you want to intermix your markdown with some components. For example, you may want to add a component that will enable you to add an image in the middle of your markdown and format it with whatever styling properties you wish to define. Or, you may want to intermix code in a blog and you want to define a component to style that code with copy to clipboard functionality, etc. The possibilities are endless. You can easily accomplish these tasks using [MDX](https://mdxjs.com/).
 
 If in the future you want to start a project with MDX there is a site initializer for MDX. See https://www.gatsbyjs.org/docs/mdx/getting-started for more info. For now, we will add it to our existing demo project.
 
