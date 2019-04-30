@@ -2,7 +2,12 @@
 
 Gatsby is a static site generator. You can source your pages from various data sources, such as a CMS, Markdown or JSON, etc.
 
-### Setup
+### Table of Contents
+1. [Setup](#setup)
+1. [Testing Your New Site](#testing-your-new-site)
+1. [Sourcing Pages from Markdown](#sourcing-pages-from-markdown)
+
+## Setup
 
 ```
 npm install -g gatsby-cli  # Install the Gatsby CLI
@@ -13,7 +18,7 @@ npm run build              # Build out the static pages
 npm run serve              # Serve up the static pages with a web server
 ```
 
-### Testing Your New Site
+## Testing Your New Site
 
 Visit http://localhost:8000/ and verify that it is working.
 Visit http://localhost:8000/___graphql to run GraphiQL, which is an in-browser tool for writing and testing GraphQL queries
@@ -26,7 +31,7 @@ With Gatsby you use GraphQL to gather only the data you need from the source dat
 
 GraphiQL is an in-browser tool that is available only when running gatsby's development server. This can be useful for testing out the GraphQL queries that you define in your templates.
 
-### Sourcing Pages from Markdown
+## Sourcing Pages from Markdown
 
 1. Install markdown plugin.
     ```
@@ -206,7 +211,7 @@ And lastly we will change the `createPage` call to pull the template dynaically 
 
 Now restart the development server and test your http://localhost:8000/contact page. It should now show the contact template.
 
-### Internal Linking
+## Internal Linking
 
 Gatsby supports preloading of internal links. Page links are preloaded when they come into view on the browser window. Add a link as follows:
 
@@ -220,7 +225,7 @@ Gatsby supports preloading of internal links. Page links are preloaded when they
     ```
 Preloading using the Link component is not supported within your markdown. Traditional markdown links such as `[label](ulr)` work fine but preloading is not applied. To get preloading to work within your markdown you may want to use [MDX](https://mdxjs.com/) with the [gatsby-mdx plugin]( https://www.gatsbyjs.org/packages/gatsby-mdx/).
 
-### Optimizing Images
+## Optimizing Images
 
 All images, whether optimized or not, sould be stored in your `/src/images` folder, which has been added as a `gatsby-source-filesystem` in the default `gatsby-config.js` configuration. Small images such as an SVG logo do not need to be optimized. These images can be imported into your JSX as follows:
 
@@ -269,11 +274,11 @@ We will be following the steps outline in https://www.gatsbyjs.org/docs/using-ga
     ```
     Note: Throttle network in browser settings to Fast 3G to demo the SVG blurred image while loading.
     
-### Make Styling Easier with Styled Components
+## Make Styling Easier with Styled Components
 
 Gatsby works great with styled components. Visit https://www.gatsbyjs.org/docs/styled-components/ to learn more. You can also use the [Material UI Component Library](https://material-ui.com/) without any Gatsby plugin. This can be helpful for programming input forms, etc.
 
-### Some SEO Considerations
+## Some SEO Considerations
 
 * Add a favicon using the [gatsby-plugin-manifest plugin](https://www.gatsbyjs.org/tutorial/part-eight/#-using-gatsby-plugin-manifest).
 * Add page metadata [using helmet](https://www.gatsbyjs.org/tutorial/part-eight/#add-page-metadata).
